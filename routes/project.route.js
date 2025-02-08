@@ -15,7 +15,6 @@ projectRouter.post("/add", upload.single("file"), async (req, res) => {
   );
 
   const {
-    userId,
     title,
 
     description,
@@ -47,7 +46,6 @@ projectRouter.post("/add", upload.single("file"), async (req, res) => {
     }
 
     if (
-      !userId ||
       !title ||
       !description ||
       !status ||
@@ -64,7 +62,7 @@ projectRouter.post("/add", upload.single("file"), async (req, res) => {
     const learningsArray = learnings.split(",");
     const newProject = new ProjectModel({
       poster: cloudinaryResponse.secure_url,
-      userId,
+
       title,
       learnings: learningsArray,
       description,
