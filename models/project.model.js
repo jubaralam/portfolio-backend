@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 
 const projectSchema = mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "user",
-    },
     title: { type: String, required: true, trim: true },
     poster: { type: String, required: true },
     description: { type: String, required: true, trim: true },
@@ -15,7 +10,11 @@ const projectSchema = mongoose.Schema(
       type: [String],
       required: true,
     },
-    github_link: { type: String, required: true },
+    learnings: {
+      type: [String],
+      required: true,
+    },
+    github_link: { type: [String], required: true },
     project_url: {
       type: String,
       required: true,
@@ -24,6 +23,7 @@ const projectSchema = mongoose.Schema(
       type: String,
     },
   },
+
   {
     timestamps: true,
   }
