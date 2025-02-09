@@ -16,7 +16,7 @@ projectRouter.post("/add", upload.single("file"), async (req, res) => {
 
   const {
     title,
-
+    stars,
     description,
     status,
     technologies,
@@ -73,6 +73,7 @@ projectRouter.post("/add", upload.single("file"), async (req, res) => {
       github_link: gitLinks,
       project_url,
       video_demo_link,
+      stars,
     });
 
     const savedProject = await newProject.save();
@@ -117,7 +118,7 @@ projectRouter.get("/latest", async (req, res) => {
   const { limit = 3 } = req.query;
 
   try {
-    const projects = await ProjectModel.find().sort({ updatedAt: -1 }).limit(3);
+    const projects = await ProjectModel.find().sort({ stars: -1 }).limit(limit);
 
     if (projects <= 0) {
       return res.status(404).send({ error: "projects not found" });

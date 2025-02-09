@@ -7,6 +7,7 @@ const projectSchema = mongoose.Schema(
     description: { type: String, required: true, trim: true },
     status: { type: String, default: "inprogress" },
     project_type: { type: String, default: "Frontend" },
+    stars: { type: String, default:"1" },
     technologies: {
       type: [String],
       required: true,
