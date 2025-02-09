@@ -5,7 +5,8 @@ const projectSchema = mongoose.Schema(
     title: { type: String, required: true, trim: true },
     poster: { type: String, required: true },
     description: { type: String, required: true, trim: true },
-    status: { type: String, default: "progress" },
+    status: { type: String, default: "inprogress" },
+    project_type: { type: String, default: "Frontend" },
     technologies: {
       type: [String],
       required: true,

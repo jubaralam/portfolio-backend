@@ -24,6 +24,7 @@ projectRouter.post("/add", upload.single("file"), async (req, res) => {
     project_url,
     video_demo_link,
     learnings,
+    project_type,
   } = cleanedBody;
   try {
     if (!req.file) {
@@ -60,9 +61,10 @@ projectRouter.post("/add", upload.single("file"), async (req, res) => {
     const technologiesArray = technologies.split(",");
     const gitLinks = github_link.split(",");
     const learningsArray = learnings.split(",");
+
     const newProject = new ProjectModel({
       poster: cloudinaryResponse.secure_url,
-
+      project_type,
       title,
       learnings: learningsArray,
       description,
@@ -97,7 +99,7 @@ projectRouter.get("/", async (req, res) => {
   }
 });
 projectRouter.get("/id/:id", async (req, res) => {
-    const {id} = req.params
+  const { id } = req.params;
   try {
     const project = await ProjectModel.findById(id);
 
@@ -106,6 +108,22 @@ projectRouter.get("/id/:id", async (req, res) => {
     }
 
     res.status(200).send({ data: project });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+projectRouter.get("/latest", async (req, res) => {
+  const { limit = 3 } = req.query;
+
+  try {
+    const projects = await ProjectModel.find().sort({ updatedAt: -1 }).limit(3);
+
+    if (projects <= 0) {
+      return res.status(404).send({ error: "projects not found" });
+    }
+
+    res.status(200).send({ data: projects });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
