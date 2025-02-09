@@ -96,4 +96,18 @@ projectRouter.get("/", async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 });
+projectRouter.get("/id/:id", async (req, res) => {
+    const {id} = req.params
+  try {
+    const project = await ProjectModel.findById(id);
+
+    if (!project) {
+      return res.status(404).send({ error: "projects not found" });
+    }
+
+    res.status(200).send({ data: project });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
 module.exports = projectRouter;
